@@ -1,0 +1,2 @@
+export const img1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Uber_logo_2018.svg/2560px-Uber_logo_2018.svg.png";
+export const img2 = "https://s.wsj.net/public/resources/images/BN-XR453_201802_M_20180228165619.gif";
