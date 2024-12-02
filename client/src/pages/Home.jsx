@@ -1,18 +1,111 @@
-import React from 'react'
-import { img1, img2 } from '../assests/image'
+import React, { useRef, useState } from "react";
+import { img1, img2 } from "../assests/image";
+import { Link } from "react-router-dom";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import 'remixicon/fonts/remixicon.css'
+import LocationPanel from "../components/LocationPanel";
+import VehiclePanel from "../components/VehiclePanel";
 
 const Home = () => {
-  return (
-    <div>
-        <img className='w-20 absolute left-5 top-7' src={img1} alt="" />
-        <div className='h-screen w-screen'>
-          <img className='h-full w-full object-cover' src={img2} alt="" />
-        </div>
-        <div>
-          
-        </div>
-    </div>
-  )
-}
+  const [pickup, setPickup] = useState("");
+  const [destination, setDestination] = useState("");
+  const [panel, setPanel] = useState(false);
+  const panelRef = useRef();
+  const panelCloseRef = useRef();
 
-export default Home
+  const submitHandler = (e) => {
+    e.preventDefault();
+  };
+
+  useGSAP(() => {
+    const panelElement = panelRef.current; // Ensure the ref is correct
+
+    if (panel) {
+      gsap.to(panelElement, {
+        height: "70%",
+        padding:24
+      });
+      gsap.to(panelCloseRef.current,{
+        opacity: 1
+      })
+    } else {
+      gsap.to(panelElement, {
+        height: "0%",
+        padding:0
+      });
+      gsap.to(panelCloseRef.current,{
+        opacity: 0
+      })
+    }
+  }, [panel]);
+
+  return (
+    <div className="h-screen relative overflow-hidden">
+      {/* <img className='w-20 absolute left-5 top-7' src={img1} alt="" /> */}
+      <h1 className="w-20 absolute left-5 top-7 text-5xl font-medium">Uber</h1>
+      <div className="h-screen w-screen">
+        <img className="h-full w-full object-cover" src={img2} alt="" />
+      </div>
+      <div className="flex flex-col justify-end h-screen absolute top-0 w-full">
+        <div className="bg-white bottom-0 w-full p-6 rounded-t-3xl shadow-lg">
+          <h5 ref={panelCloseRef} onClick={()=> setPanel(false)} className="absolute right-6 top-6 text-2xl"><i className="ri-arrow-down-wide-line"></i></h5>
+          <h2 className="text-2xl font-bold mb-6 text-center">
+            Request a ride now
+          </h2>
+          <form className="space-y-4" onSubmit={submitHandler}>
+            <div className="flex items-center bg-gray-100 rounded-lg p-3">
+              <span className="text-gray-400 mr-3">📍</span>
+              <input
+                type="text"
+                onClick={() => setPanel(true)}
+                placeholder="Enter pickup location"
+                className="flex-1 bg-transparent outline-none"
+                value={pickup}
+                onChange={(e) => setPickup(e.target.value)}
+              />
+              <span className="text-gray-400">➤</span>
+            </div>
+
+            <div className="flex items-center bg-gray-100 rounded-lg p-3">
+              <span className="text-gray-400 mr-3">📌</span>
+              <input
+                type="text"
+                onClick={() => setPanel(true)}
+                placeholder="Enter destination"
+                className="flex-1 bg-transparent outline-none"
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-3">
+              <button
+                type="submit"
+                className="w-full bg-black text-white text-lg font-medium py-3 rounded-lg hover:bg-gray-800 transition"
+              >
+                Request now
+              </button>
+              <Link
+                to="/"
+                className="inline-block text-center w-full bg-gray-100 text-gray-700 text-lg font-medium py-3 rounded-lg hover:bg-gray-200 transition"
+              >
+                Schedule for later
+              </Link>
+            </div>
+          </form>
+        </div>
+        <div ref={panelRef} className="bg-white h-0">
+          <LocationPanel/>
+        </div>
+      </div>
+      
+      <div className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <VehiclePanel/>
+      </div>
+      
+    </div>
+  );
+};
+
+export default Home;
