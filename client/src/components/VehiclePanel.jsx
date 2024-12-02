@@ -1,11 +1,15 @@
 import React from 'react';
 
-const VehiclePanel = () => {
+const VehiclePanel = ({setVehiclePanel,setPanel,setConfirmRidePanel}) => {
   return (
     <div className='flex flex-col justify-center items-center'>
       <h5
         className="p-1 text-center w-[93%] absolute top-0"
-        onClick={() => alert('Close Vehicle Panel')}
+        onClick={() =>{
+          setVehiclePanel(false);
+          setPanel(true);
+        }}
+        
       >
         <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i>
       </h5>
@@ -14,7 +18,7 @@ const VehiclePanel = () => {
       {/* UberGo Card */}
       <div
         className="flex border-2 active:border-black mb-2 rounded-xl w-full p-3 items-center justify-between"
-        onClick={() => alert('Selected UberGo')}
+        onClick={() => setConfirmRidePanel(true)}
       >
         <img
           className="h-10"

@@ -6,13 +6,19 @@ import gsap from "gsap";
 import 'remixicon/fonts/remixicon.css'
 import LocationPanel from "../components/LocationPanel";
 import VehiclePanel from "../components/VehiclePanel";
+import ConfirmRide from "../components/ConfirmRide";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [panel, setPanel] = useState(false);
+  const [vehiclePanel,setVehiclePanel] = useState(false)
+  const [ confirmRidePanel, setConfirmRidePanel ] = useState(false)
   const panelRef = useRef();
   const panelCloseRef = useRef();
+  const vehiclePanelRef = useRef(null);
+  const confirmRideRef = useRef(null);
+ 
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -39,6 +45,32 @@ const Home = () => {
       })
     }
   }, [panel]);
+
+  useGSAP(function () {
+    if (vehiclePanel) {
+        gsap.to(vehiclePanelRef.current, {
+            transform: 'translateY(0)'
+        })
+    } else {
+        gsap.to(vehiclePanelRef.current, {
+            transform: 'translateY(100%)'
+        })
+    }
+}, [ vehiclePanel ])
+
+  useGSAP(function () {
+    if (confirmRidePanel) {
+        gsap.to(confirmRideRef.current, {
+            transform: 'translateY(0)'
+        })
+    } else {
+        gsap.to(confirmRideRef.current, {
+            transform: 'translateY(100%)'
+        })
+    }
+}, [ confirmRidePanel ])
+
+  
 
   return (
     <div className="h-screen relative overflow-hidden">
@@ -95,13 +127,19 @@ const Home = () => {
             </div>
           </form>
         </div>
+
         <div ref={panelRef} className="bg-white h-0">
-          <LocationPanel/>
+          <LocationPanel panel={panel} setPanel={setPanel} vehiclePanel={vehiclePanel} setVehiclePanel={setVehiclePanel}/>
         </div>
       </div>
+
       
-      <div className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
-            <VehiclePanel/>
+      <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <VehiclePanel setPanel={setPanel} setVehiclePanel={setVehiclePanel} setConfirmRidePanel={setConfirmRidePanel}/>
+      </div>
+
+      <div ref={confirmRideRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
+            <ConfirmRide setConfirmRidePanel={setConfirmRidePanel}/>
       </div>
       
     </div>
