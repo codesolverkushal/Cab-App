@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { img1, img2 } from "../assests/image";
+import { img2 } from "../assests/image";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
