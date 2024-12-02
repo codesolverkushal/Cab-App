@@ -7,6 +7,7 @@ import 'remixicon/fonts/remixicon.css'
 import LocationPanel from "../components/LocationPanel";
 import VehiclePanel from "../components/VehiclePanel";
 import ConfirmRide from "../components/ConfirmRide";
+import LookingForDriver from "../components/LookingForDriver";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -14,10 +15,13 @@ const Home = () => {
   const [panel, setPanel] = useState(false);
   const [vehiclePanel,setVehiclePanel] = useState(false)
   const [ confirmRidePanel, setConfirmRidePanel ] = useState(false)
+  const [lookingForDriver,setLookingForDriver] = useState(false);
+
   const panelRef = useRef();
   const panelCloseRef = useRef();
   const vehiclePanelRef = useRef(null);
   const confirmRideRef = useRef(null);
+  const lookingForDeriverRef = useRef(null);
  
 
   const submitHandler = (e) => {
@@ -57,6 +61,18 @@ const Home = () => {
         })
     }
 }, [ vehiclePanel ])
+
+  useGSAP(function () {
+    if (lookingForDriver) {
+        gsap.to(lookingForDeriverRef.current, {
+            transform: 'translateY(0)'
+        })
+    } else {
+        gsap.to(lookingForDeriverRef.current, {
+            transform: 'translateY(100%)'
+        })
+    }
+}, [ lookingForDriver ])
 
   useGSAP(function () {
     if (confirmRidePanel) {
@@ -139,7 +155,11 @@ const Home = () => {
       </div>
 
       <div ref={confirmRideRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
-            <ConfirmRide setConfirmRidePanel={setConfirmRidePanel}/>
+            <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setLookingForDriver={setLookingForDriver}/>
+      </div>
+
+      <div ref={lookingForDeriverRef} className='fixed w-full z-10 bottom-0  bg-white px-3 py-6 pt-12'>
+            <LookingForDriver setLookingForDriver={setLookingForDriver}/>
       </div>
       
     </div>

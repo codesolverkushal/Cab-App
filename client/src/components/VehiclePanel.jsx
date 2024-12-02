@@ -38,7 +38,7 @@ const VehiclePanel = ({setVehiclePanel,setPanel,setConfirmRidePanel}) => {
       {/* Moto Card */}
       <div
         className="flex border-2 active:border-black mb-2 rounded-xl w-full p-3 items-center justify-between"
-        onClick={() => alert('Selected Moto')}
+        onClick={() => setConfirmRidePanel(true)}
       >
         <img
           className="h-10"
@@ -58,7 +58,7 @@ const VehiclePanel = ({setVehiclePanel,setPanel,setConfirmRidePanel}) => {
       {/* UberAuto Card */}
       <div
         className="flex border-2 active:border-black mb-2 rounded-xl w-full p-3 items-center justify-between"
-        onClick={() => alert('Selected UberAuto')}
+        onClick={() => setConfirmRidePanel(true)}
       >
         <img
           className="h-10"
