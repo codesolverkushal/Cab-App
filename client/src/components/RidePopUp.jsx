@@ -1,11 +1,11 @@
 import React from "react";
 
-const RidePopUp = () => {
+const RidePopUp = (props) => {
   return (
     <div>
       <h5
         className="p-1 text-center w-[93%] absolute top-0 cursor-pointer"
-        onClick={() => props.setConfirmRidePanel(false)}
+        onClick={() => props.setRidePopupPanel(false)}
       >
         <i className="text-3xl text-gray-400 hover:text-gray-100 transition-colors ri-arrow-down-wide-line"></i>
       </h5>
